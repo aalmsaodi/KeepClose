@@ -19,6 +19,9 @@
 		CEAC03B11F2BF63D00A4B37A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEAC03AF1F2BF63D00A4B37A /* LaunchScreen.storyboard */; };
 		CEAC03BC1F2BF63D00A4B37A /* Close_FriendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC03BB1F2BF63D00A4B37A /* Close_FriendTests.swift */; };
 		CEAC03C71F2BF63D00A4B37A /* Close_FriendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC03C61F2BF63D00A4B37A /* Close_FriendUITests.swift */; };
+		CEAD71E71F31471B00ED9DF7 /* UIImage+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71E61F31471B00ED9DF7 /* UIImage+Rounded.swift */; };
+		CEAD71ED1F337D1B00ED9DF7 /* CopyableUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71EC1F337D1B00ED9DF7 /* CopyableUILabel.swift */; };
+		CEAD71EF1F34268A00ED9DF7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71EE1F34268A00ED9DF7 /* Notifications.swift */; };
 		CEB350B11F2C16750003B48D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB350B01F2C16750003B48D /* SettingsVC.swift */; };
 		CEB350B41F2D1AD30003B48D /* ContactViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB350B21F2D1AD30003B48D /* ContactViewCell.swift */; };
 		CEB350B51F2D1AD30003B48D /* ContactViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB350B31F2D1AD30003B48D /* ContactViewCell.xib */; };
@@ -66,6 +69,9 @@
 		CEAC03C21F2BF63D00A4B37A /* Close FriendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Close FriendUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAC03C61F2BF63D00A4B37A /* Close_FriendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Close_FriendUITests.swift; sourceTree = "<group>"; };
 		CEAC03C81F2BF63D00A4B37A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEAD71E61F31471B00ED9DF7 /* UIImage+Rounded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Rounded.swift"; sourceTree = "<group>"; };
+		CEAD71EC1F337D1B00ED9DF7 /* CopyableUILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyableUILabel.swift; sourceTree = "<group>"; };
+		CEAD71EE1F34268A00ED9DF7 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		CEB350B01F2C16750003B48D /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		CEB350B21F2D1AD30003B48D /* ContactViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewCell.swift; sourceTree = "<group>"; };
 		CEB350B31F2D1AD30003B48D /* ContactViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactViewCell.xib; sourceTree = "<group>"; };
@@ -124,17 +130,14 @@
 		CEAC03A51F2BF63D00A4B37A /* Close Friend */ = {
 			isa = PBXGroup;
 			children = (
-				CE32796C1F2F8C3600425D07 /* Main.storyboard */,
+				CEAD71E81F32144F00ED9DF7 /* View */,
+				CEAD71EA1F3214AF00ED9DF7 /* Controller */,
+				CEAD71EB1F3214BF00ED9DF7 /* Model */,
 				CEAC03A61F2BF63D00A4B37A /* AppDelegate.swift */,
-				CEAC03A81F2BF63D00A4B37A /* ImportedContactsVC.swift */,
-				CE32796A1F2F77D100425D07 /* ContactDetailsVC.swift */,
-				CEB350B01F2C16750003B48D /* SettingsVC.swift */,
-				CEAC03AD1F2BF63D00A4B37A /* Assets.xcassets */,
+				CEAD71E61F31471B00ED9DF7 /* UIImage+Rounded.swift */,
+				CEAD71EC1F337D1B00ED9DF7 /* CopyableUILabel.swift */,
 				CEAC03B21F2BF63D00A4B37A /* Info.plist */,
-				CEB350B21F2D1AD30003B48D /* ContactViewCell.swift */,
-				CEB350B31F2D1AD30003B48D /* ContactViewCell.xib */,
-				CE3279681F2D3B5700425D07 /* Contact.swift */,
-				CEAC03AF1F2BF63D00A4B37A /* LaunchScreen.storyboard */,
+				CEAC03AD1F2BF63D00A4B37A /* Assets.xcassets */,
 			);
 			path = "Close Friend";
 			sourceTree = "<group>";
@@ -155,6 +158,44 @@
 				CEAC03C81F2BF63D00A4B37A /* Info.plist */,
 			);
 			path = "Close FriendUITests";
+			sourceTree = "<group>";
+		};
+		CEAD71E81F32144F00ED9DF7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CE32796C1F2F8C3600425D07 /* Main.storyboard */,
+				CEAD71E91F32145D00ED9DF7 /* Custom Cell */,
+				CEAC03AF1F2BF63D00A4B37A /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CEAD71E91F32145D00ED9DF7 /* Custom Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CEB350B21F2D1AD30003B48D /* ContactViewCell.swift */,
+				CEB350B31F2D1AD30003B48D /* ContactViewCell.xib */,
+			);
+			name = "Custom Cell";
+			sourceTree = "<group>";
+		};
+		CEAD71EA1F3214AF00ED9DF7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CEAC03A81F2BF63D00A4B37A /* ImportedContactsVC.swift */,
+				CE32796A1F2F77D100425D07 /* ContactDetailsVC.swift */,
+				CEB350B01F2C16750003B48D /* SettingsVC.swift */,
+				CEAD71EE1F34268A00ED9DF7 /* Notifications.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CEAD71EB1F3214BF00ED9DF7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CE3279681F2D3B5700425D07 /* Contact.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		EA208AEB2A96F030F16799CB /* Pods */ = {
@@ -466,8 +507,11 @@
 				CEAC03A91F2BF63D00A4B37A /* ImportedContactsVC.swift in Sources */,
 				CEAC03A71F2BF63D00A4B37A /* AppDelegate.swift in Sources */,
 				CE3279691F2D3B5700425D07 /* Contact.swift in Sources */,
+				CEAD71EF1F34268A00ED9DF7 /* Notifications.swift in Sources */,
 				CEB350B11F2C16750003B48D /* SettingsVC.swift in Sources */,
 				CE32796B1F2F77D100425D07 /* ContactDetailsVC.swift in Sources */,
+				CEAD71ED1F337D1B00ED9DF7 /* CopyableUILabel.swift in Sources */,
+				CEAD71E71F31471B00ED9DF7 /* UIImage+Rounded.swift in Sources */,
 				CEB350B41F2D1AD30003B48D /* ContactViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

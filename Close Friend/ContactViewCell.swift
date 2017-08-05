@@ -11,7 +11,7 @@ import UIKit
 class ContactViewCell: UITableViewCell {
 
     @IBOutlet weak var contactPic: UIImageView!
-    @IBOutlet weak var contactNum: UILabel!
+    @IBOutlet weak var contactUsefulInfo: UILabel!
     @IBOutlet weak var contactName: UILabel!
     @IBOutlet weak var contactBtn: UIButton!
     

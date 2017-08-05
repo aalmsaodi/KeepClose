@@ -9,12 +9,16 @@
 import UIKit
 import Contacts
 import ContactsUI
+import MessageUI
 
-class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CNContactPickerDelegate {
 
-    var contactStore = CNContactStore()
-    var importedContactsData:[Contact] = []
+class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CNContactPickerDelegate, UISearchResultsUpdating {
 
+    let contactStore = CNContactStore()
+    
+    var filteredContacts:[(String,String)] = []
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     @IBOutlet weak var contactsTableView: UITableView!
     
@@ -27,10 +31,14 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
         contactsTableView.register(UINib(nibName: "ContactViewCell", bundle: nil), forCellReuseIdentifier: "contactViewCell")
         
         contactsTableView.allowsMultipleSelection = true
-        self.automaticallyAdjustsScrollViewInsets = false
+        self.automaticallyAdjustsScrollViewInsets = false //To remove top space on top of TableView
         
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        contactsTableView.tableHeaderView = searchController.searchBar
     }
-  
+    
     @IBAction func addContactsTapped(_ sender: UIButton) {
         
         let entityType = CNEntityType.contacts
@@ -57,23 +65,42 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func deleteContacts(_ sender: UIButton) {
     
-        let selected_indexPaths = contactsTableView.indexPathsForSelectedRows
+        guard let selected_indexPaths = contactsTableView.indexPathsForSelectedRows else {return}
         
-        if let indices = selected_indexPaths?.indices {
+        let indecies = selected_indexPaths.map{$0.row}.sorted(by: {$0 > $1})
 
-            for index in indices.reversed() {
-                Contact.importedContactsIDs.remove(at: index+1)
-                importedContactsData.remove(at: index+1)
-            }
-            
-            importedContactsData.sort(by: {$0.name < $1.name})
-            Contact.importedContactsIDs.sort(by: { $0.0 < $1.0 })
-
-            contactsTableView.deleteRows(at: selected_indexPaths!, with: UITableViewRowAnimation.automatic)
+        for indx in indecies {
+            Contact.importedContactsIDs.remove(at: indx)
         }
+
+        let contactDect:[String: String] = ["id": Contact.importedContactsIDs[0].1]
         
+        //temp code
+        NotificationCenter.default.post(name: .contactNotification, object: nil, userInfo: contactDect)
+        
+        
+        contactsTableView.deleteRows(at: selected_indexPaths, with: UITableViewRowAnimation.automatic)
     }
     
+    
+// MARK: - Picking and importing contacts
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+                
+        for contact in contacts {
+            
+            if !tupleContains(arr: Contact.importedContactsIDs, str: contact.identifier){ //to avoid duplicates
+                
+                let name = CNContactFormatter.string(from: contact, style: .fullName)
+                
+                Contact.importedContactsIDs.append((name!, contact.identifier))
+                filteredContacts.append((name!, contact.identifier))
+            }
+        }
+        
+        Contact.importedContactsIDs.sort(by: { $0.0 < $1.0 })
+        
+        contactsTableView.reloadData()
+    }
     
     func openContacts(){
         
@@ -81,7 +108,6 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
         contactPicker.delegate = self
         
         self.present(contactPicker, animated: true, completion: nil)
-        
     }
     
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
@@ -89,39 +115,7 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
         picker.dismiss(animated: true)
     }
     
-    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
-        
-        let defaultImage = UIImagePNGRepresentation(UIImage(named: "1")!)!
-        var numbers, emails: [String]
-        
-        for contact in contacts {
-            
-            if !contains(arr: Contact.importedContactsIDs, str: contact.identifier){
-                let fullName = CNContactFormatter.string(from: contact, style: .fullName)
-                
-                for number in contact.phoneNumbers {
-                    numbers.append(number.value.stringValue)
-                }
-                
-                for email in contact.emailAddresses {
-                    emails.append(email.value as String)
-                }
-                
-                let pic = UIImage(data: contact.imageData ?? defaultImage)
-                
-                Contact.importedContactsIDs.append((fullName!,contact.identifier))
-                importedContactsData.append(Contact(name: fullName!, phone: numbers, email: emails, image: pic))
-            }
-            
-        }
-        
-        importedContactsData.sort(by: {$0.name < $1.name})
-        Contact.importedContactsIDs.sort(by: { $0.0 < $1.0 })
-        contactsTableView.reloadData()
-        
-    }
-    
-    func contains(arr:[(String, String)], str:String) -> Bool {
+    func tupleContains(arr:[(String, String)], str:String) -> Bool {
 
         for (_, value) in arr {
             if value == str { return true }
@@ -129,37 +123,62 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
         return false
     }
     
-    
+
+// MARK: - TableView and cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactViewCell", for: indexPath) as! ContactViewCell
         
-        cell.contactNum.text = importedContactsData[indexPath.row].phone
-        cell.contactName.text = importedContactsData[indexPath.row].name
-        cell.contactPic.image = importedContactsData[indexPath.row].image
+        if searchController.isActive && searchController.searchBar.text != "" {
+            cell.contactName.text = filteredContacts[indexPath.row].0
+            cell.contactBtn.tag = indexPath.row
+            cell.contactBtn.addTarget(self, action: #selector(contactOptionsAction), for: .touchUpInside)
         
-        cell.contactBtn.tag = indexPath.row
-        cell.contactBtn.addTarget(self, action: #selector(contactOptionsAction), for: .touchUpInside)
+        } else {
+            cell.contactName.text = Contact.importedContactsIDs[indexPath.row].0
+            cell.contactBtn.tag = indexPath.row
+            cell.contactBtn.addTarget(self, action: #selector(contactOptionsAction), for: .touchUpInside)
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return importedContactsData.count
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filteredContacts.count
+        }
+        return Contact.importedContactsIDs.count
     }
     
     @IBAction func contactOptionsAction(sender: UIButton) {
         performSegue(withIdentifier: "goToContactDetails", sender: sender)
     }
 
+    
+// MARK: - Search Bar
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchText: searchController.searchBar.text!)
+    }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        filteredContacts = Contact.importedContactsIDs.filter { contact in
+            return contact.0.lowercased().contains(searchText.lowercased())
+        }
+        
+        contactsTableView.reloadData()
+    }
+    
+    
+// MARK: - Prepare for seguae
     override func prepare(for segue: UIStoryboardSegue, sender: (Any)?) {
         
         if segue.identifier == "goToContactDetails" {
 
-            let upcomingContactDetailsVC = segue.destination as! ContactDetailsVC
-            let index = (sender as! UIButton).tag
-            
-            upcomingContactDetailsVC.titleString = importedContactsData[index].phone!
+//            let upcomingContactDetailsVC = segue.destination as! ContactDetailsVC
+//            let index = (sender as! UIButton).tag
+//            
+//            upcomingContactDetailsVC.contactDetails = importedContacts[index]
+
         }
     }
 }
