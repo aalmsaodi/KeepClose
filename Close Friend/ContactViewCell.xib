@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,43 +29,36 @@
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="uRK-ie-WaQ">
                         <rect key="frame" x="54" y="5" width="261" height="33.5"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="kY5-2r-1ih">
-                                <rect key="frame" x="0.0" y="0.0" width="187" height="33.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FPx-dh-gDr">
+                                <rect key="frame" x="0.0" y="0.0" width="261" height="33.5"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQE-Fi-x9z">
+                                        <rect key="frame" x="161.5" y="0.0" width="94.5" height="34"/>
+                                        <color key="backgroundColor" red="0.0039215686274509803" green="0.65490196078431373" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First &amp; Last Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="48s-3R-LCN">
-                                        <rect key="frame" x="0.0" y="0.0" width="187" height="17"/>
+                                        <rect key="frame" x="5" y="0.0" width="156.5" height="33.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QAX-tm-hAe" userLabel="Useful Info">
-                                        <rect key="frame" x="0.0" y="17" width="187" height="16.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8R-Kj-4Yy">
-                                <rect key="frame" x="187" y="0.0" width="74" height="33.5"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="w8R-Kj-4Yy" secondAttribute="height" multiplier="73:33" id="doq-lC-FxH"/>
+                                    <constraint firstItem="48s-3R-LCN" firstAttribute="width" secondItem="FPx-dh-gDr" secondAttribute="width" multiplier="3:5" id="ALt-DN-Of2"/>
+                                    <constraint firstItem="48s-3R-LCN" firstAttribute="top" secondItem="FPx-dh-gDr" secondAttribute="top" id="BtS-aN-LFI"/>
+                                    <constraint firstItem="oQE-Fi-x9z" firstAttribute="top" secondItem="FPx-dh-gDr" secondAttribute="top" id="NAu-9H-2hx"/>
+                                    <constraint firstAttribute="bottom" secondItem="48s-3R-LCN" secondAttribute="bottom" id="Rqx-is-huy"/>
+                                    <constraint firstItem="48s-3R-LCN" firstAttribute="leading" secondItem="FPx-dh-gDr" secondAttribute="leading" constant="5" id="SqQ-hQ-smw"/>
+                                    <constraint firstItem="oQE-Fi-x9z" firstAttribute="leading" secondItem="48s-3R-LCN" secondAttribute="trailing" id="e8v-bS-ShF"/>
+                                    <constraint firstAttribute="bottom" secondItem="oQE-Fi-x9z" secondAttribute="bottom" id="u41-NQ-xc4"/>
+                                    <constraint firstAttribute="trailing" secondItem="oQE-Fi-x9z" secondAttribute="trailing" constant="5" id="ve4-Ez-k8F"/>
                                 </constraints>
-                                <state key="normal" title="contact">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
+                            </view>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="w8R-Kj-4Yy" secondAttribute="trailing" id="4SG-Rb-bDR"/>
-                            <constraint firstItem="kY5-2r-1ih" firstAttribute="top" secondItem="uRK-ie-WaQ" secondAttribute="top" id="MuM-Hi-FXY"/>
-                            <constraint firstAttribute="bottom" secondItem="w8R-Kj-4Yy" secondAttribute="bottom" id="Tmj-BP-1Ec"/>
-                            <constraint firstItem="kY5-2r-1ih" firstAttribute="leading" secondItem="uRK-ie-WaQ" secondAttribute="leading" id="quq-Xo-69F"/>
-                            <constraint firstAttribute="bottom" secondItem="kY5-2r-1ih" secondAttribute="bottom" id="tss-hA-xew"/>
-                            <constraint firstItem="w8R-Kj-4Yy" firstAttribute="leading" secondItem="kY5-2r-1ih" secondAttribute="trailing" id="uxv-sc-ny2"/>
-                            <constraint firstItem="w8R-Kj-4Yy" firstAttribute="top" secondItem="uRK-ie-WaQ" secondAttribute="top" id="xGY-cI-fzC"/>
-                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -78,10 +72,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="contactBtn" destination="w8R-Kj-4Yy" id="A75-0B-E9W"/>
                 <outlet property="contactName" destination="48s-3R-LCN" id="P0s-3C-HrE"/>
                 <outlet property="contactPic" destination="Kwg-FP-FWT" id="qIi-Xo-Sbl"/>
-                <outlet property="contactUsefulInfo" destination="QAX-tm-hAe" id="JsN-AB-SAu"/>
+                <outlet property="periodStr" destination="oQE-Fi-x9z" id="u31-TY-ntX"/>
             </connections>
             <point key="canvasLocation" x="110" y="57"/>
         </tableViewCell>

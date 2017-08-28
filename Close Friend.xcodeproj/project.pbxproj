@@ -10,21 +10,23 @@
 		03DE67F0385E2C7AACFFE749 /* Pods_Close_FriendUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 561B1A4B33BC776CAF237D21 /* Pods_Close_FriendUITests.framework */; };
 		0DA1348D000ECE5CE9068B7A /* Pods_Close_FriendTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197DF4BBF359BE080FF0566A /* Pods_Close_FriendTests.framework */; };
 		B37575F15A8FCCA7E1B165F2 /* Pods_Close_Friend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17727AE9FD958F6E34460A09 /* Pods_Close_Friend.framework */; };
-		CE3279691F2D3B5700425D07 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3279681F2D3B5700425D07 /* Contact.swift */; };
-		CE32796B1F2F77D100425D07 /* ContactDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE32796A1F2F77D100425D07 /* ContactDetailsVC.swift */; };
 		CE32796E1F2F8C3600425D07 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE32796C1F2F8C3600425D07 /* Main.storyboard */; };
+		CE3851B11F3A4A77002DD474 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3851AF1F3A4A77002DD474 /* NotificationCell.swift */; };
+		CE3851B21F3A4A77002DD474 /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3851B01F3A4A77002DD474 /* NotificationCell.xib */; };
+		CE3851B91F3E901F002DD474 /* ContactViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3851B71F3E901F002DD474 /* ContactViewCell.swift */; };
+		CE3851BA1F3E901F002DD474 /* ContactViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3851B81F3E901F002DD474 /* ContactViewCell.xib */; };
+		CE3851BE1F3F9FF2002DD474 /* CloseFriends.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE3851BC1F3F9FF2002DD474 /* CloseFriends.xcdatamodeld */; };
+		CE892F8F1F4629760095089D /* Enums+Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE892F8E1F4629760095089D /* Enums+Globals.swift */; };
+		CE892F931F4666700095089D /* ContactNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE892F921F4666700095089D /* ContactNotification.swift */; };
 		CEAC03A71F2BF63D00A4B37A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC03A61F2BF63D00A4B37A /* AppDelegate.swift */; };
 		CEAC03A91F2BF63D00A4B37A /* ImportedContactsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC03A81F2BF63D00A4B37A /* ImportedContactsVC.swift */; };
 		CEAC03AE1F2BF63D00A4B37A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEAC03AD1F2BF63D00A4B37A /* Assets.xcassets */; };
 		CEAC03B11F2BF63D00A4B37A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEAC03AF1F2BF63D00A4B37A /* LaunchScreen.storyboard */; };
 		CEAC03BC1F2BF63D00A4B37A /* Close_FriendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC03BB1F2BF63D00A4B37A /* Close_FriendTests.swift */; };
 		CEAC03C71F2BF63D00A4B37A /* Close_FriendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC03C61F2BF63D00A4B37A /* Close_FriendUITests.swift */; };
-		CEAD71E71F31471B00ED9DF7 /* UIImage+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71E61F31471B00ED9DF7 /* UIImage+Rounded.swift */; };
 		CEAD71ED1F337D1B00ED9DF7 /* CopyableUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71EC1F337D1B00ED9DF7 /* CopyableUILabel.swift */; };
-		CEAD71EF1F34268A00ED9DF7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71EE1F34268A00ED9DF7 /* Notifications.swift */; };
+		CEAD71EF1F34268A00ED9DF7 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71EE1F34268A00ED9DF7 /* NotificationsVC.swift */; };
 		CEB350B11F2C16750003B48D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB350B01F2C16750003B48D /* SettingsVC.swift */; };
-		CEB350B41F2D1AD30003B48D /* ContactViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB350B21F2D1AD30003B48D /* ContactViewCell.swift */; };
-		CEB350B51F2D1AD30003B48D /* ContactViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB350B31F2D1AD30003B48D /* ContactViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,9 +56,14 @@
 		78052292C473C8F7ACA2CF8B /* Pods-Close Friend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Close Friend.release.xcconfig"; path = "Pods/Target Support Files/Pods-Close Friend/Pods-Close Friend.release.xcconfig"; sourceTree = "<group>"; };
 		83CA61AA4D0971ECBE07F108 /* Pods-Close FriendTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Close FriendTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Close FriendTests/Pods-Close FriendTests.release.xcconfig"; sourceTree = "<group>"; };
 		A96FBAD02A642ADF5126A78B /* Pods-Close Friend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Close Friend.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Close Friend/Pods-Close Friend.debug.xcconfig"; sourceTree = "<group>"; };
-		CE3279681F2D3B5700425D07 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		CE32796A1F2F77D100425D07 /* ContactDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsVC.swift; sourceTree = "<group>"; };
 		CE32796D1F2F8C3600425D07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CE3851AF1F3A4A77002DD474 /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		CE3851B01F3A4A77002DD474 /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
+		CE3851B71F3E901F002DD474 /* ContactViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewCell.swift; sourceTree = "<group>"; };
+		CE3851B81F3E901F002DD474 /* ContactViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactViewCell.xib; sourceTree = "<group>"; };
+		CE3851BD1F3F9FF2002DD474 /* CloseFriends.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CloseFriends.xcdatamodel; sourceTree = "<group>"; };
+		CE892F8E1F4629760095089D /* Enums+Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Enums+Globals.swift"; sourceTree = "<group>"; };
+		CE892F921F4666700095089D /* ContactNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactNotification.swift; sourceTree = "<group>"; };
 		CEAC03A31F2BF63D00A4B37A /* Close Friend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Close Friend.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAC03A61F2BF63D00A4B37A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEAC03A81F2BF63D00A4B37A /* ImportedContactsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedContactsVC.swift; sourceTree = "<group>"; };
@@ -69,12 +76,9 @@
 		CEAC03C21F2BF63D00A4B37A /* Close FriendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Close FriendUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAC03C61F2BF63D00A4B37A /* Close_FriendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Close_FriendUITests.swift; sourceTree = "<group>"; };
 		CEAC03C81F2BF63D00A4B37A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEAD71E61F31471B00ED9DF7 /* UIImage+Rounded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Rounded.swift"; sourceTree = "<group>"; };
 		CEAD71EC1F337D1B00ED9DF7 /* CopyableUILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyableUILabel.swift; sourceTree = "<group>"; };
-		CEAD71EE1F34268A00ED9DF7 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		CEAD71EE1F34268A00ED9DF7 /* NotificationsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		CEB350B01F2C16750003B48D /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
-		CEB350B21F2D1AD30003B48D /* ContactViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewCell.swift; sourceTree = "<group>"; };
-		CEB350B31F2D1AD30003B48D /* ContactViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE3851B31F3A4A97002DD474 /* Notification Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CE3851AF1F3A4A77002DD474 /* NotificationCell.swift */,
+				CE3851B01F3A4A77002DD474 /* NotificationCell.xib */,
+			);
+			name = "Notification Cell";
+			sourceTree = "<group>";
+		};
+		CE3851BB1F3E902B002DD474 /* NewContact Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CE3851B71F3E901F002DD474 /* ContactViewCell.swift */,
+				CE3851B81F3E901F002DD474 /* ContactViewCell.xib */,
+			);
+			name = "NewContact Cell";
+			sourceTree = "<group>";
+		};
 		CEAC039A1F2BF63D00A4B37A = {
 			isa = PBXGroup;
 			children = (
@@ -134,7 +156,6 @@
 				CEAD71EA1F3214AF00ED9DF7 /* Controller */,
 				CEAD71EB1F3214BF00ED9DF7 /* Model */,
 				CEAC03A61F2BF63D00A4B37A /* AppDelegate.swift */,
-				CEAD71E61F31471B00ED9DF7 /* UIImage+Rounded.swift */,
 				CEAD71EC1F337D1B00ED9DF7 /* CopyableUILabel.swift */,
 				CEAC03B21F2BF63D00A4B37A /* Info.plist */,
 				CEAC03AD1F2BF63D00A4B37A /* Assets.xcassets */,
@@ -163,29 +184,20 @@
 		CEAD71E81F32144F00ED9DF7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CE3851BB1F3E902B002DD474 /* NewContact Cell */,
 				CE32796C1F2F8C3600425D07 /* Main.storyboard */,
-				CEAD71E91F32145D00ED9DF7 /* Custom Cell */,
 				CEAC03AF1F2BF63D00A4B37A /* LaunchScreen.storyboard */,
+				CE3851B31F3A4A97002DD474 /* Notification Cell */,
 			);
 			name = View;
-			sourceTree = "<group>";
-		};
-		CEAD71E91F32145D00ED9DF7 /* Custom Cell */ = {
-			isa = PBXGroup;
-			children = (
-				CEB350B21F2D1AD30003B48D /* ContactViewCell.swift */,
-				CEB350B31F2D1AD30003B48D /* ContactViewCell.xib */,
-			);
-			name = "Custom Cell";
 			sourceTree = "<group>";
 		};
 		CEAD71EA1F3214AF00ED9DF7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				CEAC03A81F2BF63D00A4B37A /* ImportedContactsVC.swift */,
-				CE32796A1F2F77D100425D07 /* ContactDetailsVC.swift */,
 				CEB350B01F2C16750003B48D /* SettingsVC.swift */,
-				CEAD71EE1F34268A00ED9DF7 /* Notifications.swift */,
+				CEAD71EE1F34268A00ED9DF7 /* NotificationsVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -193,7 +205,9 @@
 		CEAD71EB1F3214BF00ED9DF7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CE3279681F2D3B5700425D07 /* Contact.swift */,
+				CE892F921F4666700095089D /* ContactNotification.swift */,
+				CE3851BC1F3F9FF2002DD474 /* CloseFriends.xcdatamodeld */,
+				CE892F8E1F4629760095089D /* Enums+Globals.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -300,6 +314,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = EGLENF5Q49;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 					CEAC03B61F2BF63D00A4B37A = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -340,8 +359,9 @@
 			files = (
 				CEAC03B11F2BF63D00A4B37A /* LaunchScreen.storyboard in Resources */,
 				CEAC03AE1F2BF63D00A4B37A /* Assets.xcassets in Resources */,
-				CEB350B51F2D1AD30003B48D /* ContactViewCell.xib in Resources */,
+				CE3851B21F3A4A77002DD474 /* NotificationCell.xib in Resources */,
 				CE32796E1F2F8C3600425D07 /* Main.storyboard in Resources */,
+				CE3851BA1F3E901F002DD474 /* ContactViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,14 +525,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEAC03A91F2BF63D00A4B37A /* ImportedContactsVC.swift in Sources */,
+				CE3851BE1F3F9FF2002DD474 /* CloseFriends.xcdatamodeld in Sources */,
 				CEAC03A71F2BF63D00A4B37A /* AppDelegate.swift in Sources */,
-				CE3279691F2D3B5700425D07 /* Contact.swift in Sources */,
-				CEAD71EF1F34268A00ED9DF7 /* Notifications.swift in Sources */,
+				CE892F8F1F4629760095089D /* Enums+Globals.swift in Sources */,
+				CEAD71EF1F34268A00ED9DF7 /* NotificationsVC.swift in Sources */,
 				CEB350B11F2C16750003B48D /* SettingsVC.swift in Sources */,
-				CE32796B1F2F77D100425D07 /* ContactDetailsVC.swift in Sources */,
+				CE3851B91F3E901F002DD474 /* ContactViewCell.swift in Sources */,
+				CE892F931F4666700095089D /* ContactNotification.swift in Sources */,
 				CEAD71ED1F337D1B00ED9DF7 /* CopyableUILabel.swift in Sources */,
-				CEAD71E71F31471B00ED9DF7 /* UIImage+Rounded.swift in Sources */,
-				CEB350B41F2D1AD30003B48D /* ContactViewCell.swift in Sources */,
+				CE3851B11F3A4A77002DD474 /* NotificationCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -786,6 +807,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CE3851BC1F3F9FF2002DD474 /* CloseFriends.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CE3851BD1F3F9FF2002DD474 /* CloseFriends.xcdatamodel */,
+			);
+			currentVersion = CE3851BD1F3F9FF2002DD474 /* CloseFriends.xcdatamodel */;
+			path = CloseFriends.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CEAC039B1F2BF63D00A4B37A /* Project object */;
 }

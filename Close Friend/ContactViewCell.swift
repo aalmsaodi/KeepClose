@@ -11,9 +11,8 @@ import UIKit
 class ContactViewCell: UITableViewCell {
 
     @IBOutlet weak var contactPic: UIImageView!
-    @IBOutlet weak var contactUsefulInfo: UILabel!
     @IBOutlet weak var contactName: UILabel!
-    @IBOutlet weak var contactBtn: UIButton!
+    @IBOutlet weak var periodStr: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
