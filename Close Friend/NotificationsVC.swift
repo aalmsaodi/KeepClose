@@ -195,15 +195,15 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         let avatarInitials: UIImageView = UIImageView.init(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
 
-        avatarInitials.setImageForName(string: name, backgroundColor: nil, circular: false, textAttributes: nil)
+        avatarInitials.setImageForName(string: name, backgroundColor: UIColor(red: 0x4F/0xFF, green:0x5D/0xFF, blue: 0x75/0xFF, alpha: 1), circular: false, textAttributes: nil)
         
-//        let avatarInitialsData = UIImagePNGRepresentation(avatarInitials.image!) as Data?
+        let avatarInitialsData = UIImagePNGRepresentation(avatarInitials.image!) as Data?
         
-        //UIImage(data: (contacts[0].imageData ?? avatarInitialsData)!)
+        let image = UIImage(data: (contacts[0].imageData ?? avatarInitialsData)!)?.resizeImageWith(newSize: CGSize(width: 200, height: 200))
         
         let jobTitle = contacts[0].jobTitle
         
-        save(name: name, phones: phones, emails: emails, jobTitle: jobTitle, image: avatarInitials.image!)
+        save(name: name, phones: phones, emails: emails, jobTitle: jobTitle, image: image!)
 
     }
     
@@ -221,7 +221,6 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         cell.name.text = contacts[indexPath.row].name
         cell.pic.image = UIImage(data: contacts[indexPath.row].image! as Data)
-        cell.job.text = contacts[indexPath.row].jobTitle
         cell.callBtn.addTarget(self, action: #selector(callTapped(sender:)), for: .touchUpInside)
         cell.textBtn.addTarget(self, action: #selector(textTapped(sender:)), for: .touchUpInside)
         cell.emailBtn.addTarget(self, action: #selector(emailTapped(sender:)), for: .touchUpInside)
@@ -231,9 +230,6 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         if contacts[indexPath.row].email?.count == 0 {
             cell.emailBtn.isHidden = true
-        }
-        if contacts[indexPath.row].jobTitle == "" {
-            cell.job.isHidden = true
         }
         
         return cell
@@ -307,6 +303,8 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 contactsTableView.insertRows(at: [newIndexPath], with: .fade)
             }
         }
+        
+        contactsTableView.reloadData()
     }
     
     
@@ -328,6 +326,14 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             
             CustomActionOptions(type: .call, index: sender.tag)
         }
+        
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        
+        let contact = fetchResultsController.object(at: indexPath)
+        contact.managedObjectContext?.delete(contact)
+        
+        changeBadgeCount(by: -1)
+
     }
     
     func textTapped(sender:UIButton) {

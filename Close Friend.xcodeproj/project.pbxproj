@@ -27,6 +27,7 @@
 		CEAD71ED1F337D1B00ED9DF7 /* CopyableUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71EC1F337D1B00ED9DF7 /* CopyableUILabel.swift */; };
 		CEAD71EF1F34268A00ED9DF7 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAD71EE1F34268A00ED9DF7 /* NotificationsVC.swift */; };
 		CEB350B11F2C16750003B48D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB350B01F2C16750003B48D /* SettingsVC.swift */; };
+		CEE509671F5503980027F0CD /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE509661F5503980027F0CD /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		CEAD71EC1F337D1B00ED9DF7 /* CopyableUILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyableUILabel.swift; sourceTree = "<group>"; };
 		CEAD71EE1F34268A00ED9DF7 /* NotificationsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		CEB350B01F2C16750003B48D /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		CEE509661F5503980027F0CD /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				CEAC03A81F2BF63D00A4B37A /* ImportedContactsVC.swift */,
+				CEE509661F5503980027F0CD /* File.swift */,
 				CEB350B01F2C16750003B48D /* SettingsVC.swift */,
 				CEAD71EE1F34268A00ED9DF7 /* NotificationsVC.swift */,
 			);
@@ -533,6 +536,7 @@
 				CE3851B91F3E901F002DD474 /* ContactViewCell.swift in Sources */,
 				CE892F931F4666700095089D /* ContactNotification.swift in Sources */,
 				CEAD71ED1F337D1B00ED9DF7 /* CopyableUILabel.swift in Sources */,
+				CEE509671F5503980027F0CD /* File.swift in Sources */,
 				CE3851B11F3A4A77002DD474 /* NotificationCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

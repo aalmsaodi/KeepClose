@@ -26,11 +26,12 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     let searchController = UISearchController(searchResultsController: nil)
     let notifCenter = UNUserNotificationCenter.current()
     
-    let DEFAULT_PERIOD:TimeInterval = 60 * 60 * 24 * 30 //A notification every month
+    let DEFAULT_PERIOD:TimeInterval = 2//60 * 60 * 24 * 30 //A notification every month
     var selectedPeriod:TimeInterval = 0
     
     let periodSlider = ASValueTrackingSlider()
     
+    @IBOutlet weak var footerMenuBar: NSLayoutConstraint!
     @IBOutlet weak var contactsTableView: UITableView!
     @IBOutlet weak var footerStackView: UIStackView!
     
@@ -102,13 +103,27 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
         
         let indecies = selected_indexPaths.map{$0.row}
         
-        for index in indecies {
+        if searchController.isActive {
             
-            removeLocalNotification(id: refContacts[index].id!)
+            for index in indecies {
+                
+                removeLocalNotification(id: searchFiltered[index].id!)
+                
+                scheduleLocalNotification(name: searchFiltered[index].name!, id: searchFiltered[index].id!, period: selectedPeriod)
+                
+                searchFiltered[index].period = selectedPeriod
+            }
             
-            scheduleLocalNotification(name: refContacts[index].name!, id: refContacts[index].id!, period: selectedPeriod)
-            
-            refContacts[index].period = selectedPeriod
+        } else {
+           
+            for index in indecies {
+                
+                removeLocalNotification(id: refContacts[index].id!)
+                
+                scheduleLocalNotification(name: refContacts[index].name!, id: refContacts[index].id!, period: selectedPeriod)
+                
+                refContacts[index].period = selectedPeriod
+            }
         }
     }
     
@@ -289,21 +304,19 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func deleteContacts(_ sender: UIButton) {
         
-        if !searchController.isActive {
+        guard let selected_indexPaths = contactsTableView.indexPathsForSelectedRows else {return}
+        
+        let indexPaths = selected_indexPaths.sorted().reversed()
+        
+        for indexPath in indexPaths {
             
-            guard let selected_indexPaths = contactsTableView.indexPathsForSelectedRows else {return}
+            let refContact = fetchResultsController.object(at: indexPath)
             
-            let indexPaths = selected_indexPaths.sorted().reversed()
+            removeLocalNotification(id: refContact.id!)
             
-            for indexPath in indexPaths {
-                
-                let refContact = fetchResultsController.object(at: indexPath)
-                
-                removeLocalNotification(id: refContact.id!)
-                
-                refContact.managedObjectContext?.delete(refContact)
-                
-            }
+            refContact.managedObjectContext?.delete(refContact)
+            
+            searchFiltered.remove(at: indexPath.row)
             
         }
     }
@@ -332,7 +345,7 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
             cell.contactName.text = searchFiltered[indexPath.row].name
             cell.periodStr.text = strForPeriod(value: searchFiltered[indexPath.row].period)
             
-            avatarInitials.setImageForName(string: searchFiltered[indexPath.row].name!, backgroundColor: nil, circular: false, textAttributes: nil)
+            avatarInitials.setImageForName(string: searchFiltered[indexPath.row].name!, backgroundColor: UIColor(red: 0x4F/0xFF, green:0x5D/0xFF, blue: 0x75/0xFF, alpha: 1), circular: false, textAttributes: nil)
 
             cell.contactPic.image = avatarInitials.image
             
@@ -340,8 +353,8 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
             
             cell.contactName.text = refContacts[indexPath.row].name
             cell.periodStr.text = strForPeriod(value: refContacts[indexPath.row].period)
-
-            avatarInitials.setImageForName(string: refContacts[indexPath.row].name!, backgroundColor: nil, circular: false, textAttributes: nil)
+            
+            avatarInitials.setImageForName(string: refContacts[indexPath.row].name!, backgroundColor: UIColor(red: 0x4F/0xFF, green:0x5D/0xFF, blue: 0x75/0xFF, alpha: 1), circular: false, textAttributes: nil)
             
             cell.contactPic.image = avatarInitials.image
         }
@@ -402,6 +415,19 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
 // MARK: - Search Bar ************************************************************************************
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchText: searchController.searchBar.text!)
+        
+    }
+    
+    func keyboardWasShown(notification: NSNotification) {
+        let info : NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        
+        footerMenuBar.constant = keyboardSize!.height - (self.navigationController?.navigationBar.frame.height)!
+    }
+    
+    func keyboardWillBeHidden(notification: NSNotification) {
+
+         footerMenuBar.constant = 0
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
@@ -424,6 +450,7 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
         self.automaticallyAdjustsScrollViewInsets = false //To remove top space on top of TableView
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.barTintColor = UIColor(red: 0x4F/0xFF, green:0x5D/0xFF, blue: 0x75/0xFF, alpha: 1)
         definesPresentationContext = true
         contactsTableView.tableHeaderView = searchController.searchBar
         
@@ -432,22 +459,27 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
 
         setupFetchResultsController()
         
+        let tabController = self.navigationController?.tabBarController
+        
         // Retrive notification Badge Number
         if let savedBadgeNum = (UserDefaults.standard.value(forKey: "badgeNum") as? Int)  {
             if savedBadgeNum > 0 {
-                let tabController = self.navigationController?.tabBarController
                 currentBadgeNum = savedBadgeNum
                 tabController?.tabBar.items?[tab.notifications].badgeValue = String(currentBadgeNum)
                 UIApplication.shared.applicationIconBadgeNumber = currentBadgeNum
             }
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        tabController?.tabBar.barTintColor = UIColor.white
         
         storyboard?.instantiateViewController(withIdentifier: "notificationsVC")
         
         // Setup Period slider
         periodSlider.dataSource = self
-        periodSlider.popUpViewColor = UIColor(red: 0x01/0xFF, green:0xA7/0xFF, blue: 0xC2/0xFF, alpha: 1)
+        periodSlider.popUpViewColor = UIColor(red: 0xEF/0xFF, green:0x83/0xFF, blue: 0x54/0xFF, alpha: 1)
         periodSlider.maximumValue = 8
         periodSlider.popUpViewCornerRadius = 12
         periodSlider.addTarget(self, action: #selector(notificationPeriodChanged), for: .touchUpInside)

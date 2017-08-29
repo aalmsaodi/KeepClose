@@ -21,7 +21,6 @@ class NotificationCell: UITableViewCell {
         super.awakeFromNib()
         
         pic.layer.cornerRadius = 5
-        pic.clipsToBounds = true
         callBtn.layer.cornerRadius = 5
         textBtn.layer.cornerRadius = 5
         emailBtn.layer.cornerRadius = 5

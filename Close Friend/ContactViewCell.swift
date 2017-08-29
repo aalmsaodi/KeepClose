@@ -16,7 +16,9 @@ class ContactViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        contactPic.layer.cornerRadius = 5
+        periodStr.layer.cornerRadius = 5
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
