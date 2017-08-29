@@ -21,12 +21,12 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     let refContactReq = NSFetchRequest<RefContact>(entityName: "RefContact")
     
     var refContacts = [RefContact]()
-    var searchFiltered = [RefContact]()
+    var searchFiltered = [SearchFiltered]()
     
     let searchController = UISearchController(searchResultsController: nil)
     let notifCenter = UNUserNotificationCenter.current()
     
-    let DEFAULT_PERIOD:TimeInterval = 2//60 * 60 * 24 * 30 //A notification every month
+    let DEFAULT_PERIOD:TimeInterval = 60 * 60 * 24 * 30 //A notification every month
     var selectedPeriod:TimeInterval = 0
     
     let periodSlider = ASValueTrackingSlider()
@@ -39,18 +39,18 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         
         projectSetup()
-    
+        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-
+        
         fetchData()
     }
     
     
-// MARK: - Data Core functions ***************************************************************************
+    // MARK: - Data Core functions ***************************************************************************
     func setupFetchResultsController() {
         
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
@@ -96,26 +96,34 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-// MARK: - Notifcations related methods ******************************************************************
+    // MARK: - Notifcations related methods ******************************************************************
     func notificationPeriodChanged() {
         
         guard let selected_indexPaths = contactsTableView.indexPathsForSelectedRows else {return}
         
         let indecies = selected_indexPaths.map{$0.row}
         
-        if searchController.isActive {
+        if searchController.isActive && searchController.searchBar.text != "" {
             
             for index in indecies {
                 
-                removeLocalNotification(id: searchFiltered[index].id!)
+                removeLocalNotification(id: searchFiltered[index].id)
                 
-                scheduleLocalNotification(name: searchFiltered[index].name!, id: searchFiltered[index].id!, period: selectedPeriod)
+                scheduleLocalNotification(name: searchFiltered[index].name, id: searchFiltered[index].id, period: selectedPeriod)
                 
                 searchFiltered[index].period = selectedPeriod
+                
+                let sameContact = refContacts.filter({ contact in
+                    return (contact.id!.contains(searchFiltered[index].id))
+                })
+                
+                sameContact[0].period = selectedPeriod
             }
             
+            contactsTableView.reloadData()
+            
         } else {
-           
+            
             for index in indecies {
                 
                 removeLocalNotification(id: refContacts[index].id!)
@@ -185,7 +193,7 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-
+        
         completionHandler( [.badge, .sound, .init(rawValue: 1)])
         
         let id = notification.request.identifier
@@ -259,7 +267,7 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-// MARK: - Picking and importing contacts ****************************************************************
+    // MARK: - Picking and importing contacts ****************************************************************
     func epContactPicker(_: EPContactsPicker, didSelectMultipleContacts contacts : [EPContact]) {
         
         for contact in contacts {
@@ -304,20 +312,22 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func deleteContacts(_ sender: UIButton) {
         
-        guard let selected_indexPaths = contactsTableView.indexPathsForSelectedRows else {return}
-        
-        let indexPaths = selected_indexPaths.sorted().reversed()
-        
-        for indexPath in indexPaths {
+        if !searchController.isActive {
             
-            let refContact = fetchResultsController.object(at: indexPath)
+            guard let selected_indexPaths = contactsTableView.indexPathsForSelectedRows else {return}
             
-            removeLocalNotification(id: refContact.id!)
+            let indexPaths = selected_indexPaths.sorted().reversed()
             
-            refContact.managedObjectContext?.delete(refContact)
-            
-            searchFiltered.remove(at: indexPath.row)
-            
+            for indexPath in indexPaths {
+                
+                let refContact = fetchResultsController.object(at: indexPath)
+                
+                removeLocalNotification(id: refContact.id!)
+                
+                refContact.managedObjectContext?.delete(refContact)
+                
+                searchFiltered.remove(at: indexPath.row)
+            }
         }
     }
     
@@ -330,7 +340,7 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-// MARK: - TableView and cells ***************************************************************************
+    // MARK: - TableView and cells ***************************************************************************
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -345,8 +355,8 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
             cell.contactName.text = searchFiltered[indexPath.row].name
             cell.periodStr.text = strForPeriod(value: searchFiltered[indexPath.row].period)
             
-            avatarInitials.setImageForName(string: searchFiltered[indexPath.row].name!, backgroundColor: UIColor(red: 0x4F/0xFF, green:0x5D/0xFF, blue: 0x75/0xFF, alpha: 1), circular: false, textAttributes: nil)
-
+            avatarInitials.setImageForName(string: searchFiltered[indexPath.row].name, backgroundColor: UIColor(red: 0x4F/0xFF, green:0x5D/0xFF, blue: 0x75/0xFF, alpha: 1), circular: false, textAttributes: nil)
+            
             cell.contactPic.image = avatarInitials.image
             
         } else {
@@ -412,7 +422,7 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-// MARK: - Search Bar ************************************************************************************
+    // MARK: - Search Bar ************************************************************************************
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchText: searchController.searchBar.text!)
         
@@ -426,20 +436,26 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func keyboardWillBeHidden(notification: NSNotification) {
-
-         footerMenuBar.constant = 0
+        
+        footerMenuBar.constant = 0
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         
-        searchFiltered = refContacts.filter { contact in
+        searchFiltered.removeAll()
+        
+        for refContact in refContacts.filter({ contact in
             return (contact.name?.lowercased().contains(searchText.lowercased()))!
+        }) {
+            
+            searchFiltered.append(SearchFiltered(name: refContact.name!, id: refContact.id!, period: refContact.period))
         }
         
         contactsTableView.reloadData()
+        
     }
     
-// MARK: - Project Setup *********************************************************************************
+    // MARK: - Project Setup *********************************************************************************
     func projectSetup(){
         
         // Setup Table view
@@ -456,7 +472,7 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
         
         localNotificationRequestAccess()
         notifCenter.delegate = self
-
+        
         setupFetchResultsController()
         
         let tabController = self.navigationController?.tabBarController
@@ -487,5 +503,6 @@ class ImportedContactsVC: UIViewController, UITableViewDelegate, UITableViewData
     }
     
 }
+
 
 
